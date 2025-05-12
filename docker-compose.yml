@@ -1,0 +1,46 @@
+# 🚀 docker-compose.yml (Optimized)
+
+version: '3.8'
+services:
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./backend:/app
+    # command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    # environment:
+    #   - VITE_API_URL=http://localhost:8000
+    # volumes:
+    #   - ./frontend:/app
+    #   - /app/node_modules  # Prevents overwriting node_modules
+    # stdin_open: true
+    # tty: true
+    # healthcheck:
+    #   test: ["CMD", "wget", "--spider", "http://localhost:3000"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+
+  db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: agentdock
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: agentdock_db
+    ports:
+      - "5432:5432"
+

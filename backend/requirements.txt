@@ -1,0 +1,10 @@
+# ✅ requirements.txt (backend)
+
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+sqlalchemy
+asyncpg
+alembic
+pytest
